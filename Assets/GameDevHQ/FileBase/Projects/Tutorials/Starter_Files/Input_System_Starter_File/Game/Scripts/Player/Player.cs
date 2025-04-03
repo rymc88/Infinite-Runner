@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Scripts.LiveObjects;
 using Unity.Cinemachine;
+using TMPro;
+using UnityEngine.Windows;
 
 namespace Game.Scripts.Player
 {
@@ -22,6 +24,12 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
+        private FrameworkInputActions _frameworkInput;
+
+        private void Awake()
+        {
+            _frameworkInput = new FrameworkInputActions();
+        }
 
         private void OnEnable()
         {
@@ -33,6 +41,8 @@ namespace Game.Scripts.Player
             Forklift.onDriveModeEntered += HidePlayer;
             Drone.OnEnterFlightMode += ReleasePlayerControl;
             Drone.onExitFlightmode += ReturnPlayerControl;
+
+            _frameworkInput.Player.Enable();
         } 
 
         private void Start()
@@ -57,27 +67,44 @@ namespace Game.Scripts.Player
 
         private void CalcutateMovement()
         {
-            _playerGrounded = _controller.isGrounded;
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-
-            transform.Rotate(transform.up, h);
-
-            var direction = transform.forward * v;
-            var velocity = direction * _speed;
-
-
-            _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
-
-
-            if (_playerGrounded)
-                velocity.y = 0f;
-            if (!_playerGrounded)
+            if (_frameworkInput.Player.enabled)
             {
-                velocity.y += -20f * Time.deltaTime;
+                _playerGrounded = _controller.isGrounded;
+                //float h = Input.GetAxisRaw("Horizontal");
+                //float v = Input.GetAxisRaw("Vertical");
+
+                Vector2 move = _frameworkInput.Player.Move.ReadValue<Vector2>();
+
+                //float h = move.y;
+                // float v = move.x;
+
+                //transform.Rotate(transform.up, h);
+                transform.Rotate(transform.up, move.x);
+
+                //var direction = transform.forward * v;
+                var direction = transform.forward * move.y;
+
+                var velocity = direction * _speed;
+
+
+
+                transform.Rotate(transform.up, move.x);
+
+
+
+                _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
+
+
+                if (_playerGrounded)
+                    velocity.y = 0f;
+                if (!_playerGrounded)
+                {
+                    velocity.y += -20f * Time.deltaTime;
+                }
+
+                _controller.Move(velocity * Time.deltaTime);
             }
-            
-            _controller.Move(velocity * Time.deltaTime);                      
+                       
 
         }
 
@@ -127,6 +154,8 @@ namespace Game.Scripts.Player
             Forklift.onDriveModeEntered -= HidePlayer;
             Drone.OnEnterFlightMode -= ReleasePlayerControl;
             Drone.onExitFlightmode -= ReturnPlayerControl;
+
+            _frameworkInput.Player.Disable();
         }
 
     }
