@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Cinemachine;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.LiveObjects
 {
@@ -23,38 +24,82 @@ namespace Game.Scripts.LiveObjects
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
+        FrameworkInputActions _frameworkInputs;
+
+        private void Awake()
+        {
+            _frameworkInputs = new FrameworkInputActions();
+        }
+
         private void OnEnable()
         {
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
+
+            
+
+            _frameworkInputs.Player.Enable();
+
+            _frameworkInputs.Player.Interact.performed += Interact_performed;
+            _frameworkInputs.Player.Exit.performed += Exit_performed;
         }
 
-        private void Update()
+        private void Exit_performed(InputAction.CallbackContext context)
+        {
+            if(_hacked == true)
+            {
+                _hacked = false;
+                onHackEnded?.Invoke();
+                ResetCameras();
+            }
+
+        }
+
+        private void Interact_performed(InputAction.CallbackContext context)
         {
             if (_hacked == true)
             {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    var previous = _activeCamera;
-                    _activeCamera++;
+                var previous = _activeCamera;
+                _activeCamera++;
 
 
-                    if (_activeCamera >= _cameras.Length)
-                        _activeCamera = 0;
+                if (_activeCamera >= _cameras.Length)
+                    _activeCamera = 0;
 
 
-                    _cameras[_activeCamera].Priority = 11;
-                    _cameras[previous].Priority = 9;
-                }
+                _cameras[_activeCamera].Priority = 11;
+                _cameras[previous].Priority = 9;
 
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _hacked = false;
-                    onHackEnded?.Invoke();
-                    ResetCameras();
-                }
+               
             }
         }
+
+        //private void Update()
+        //{
+        //    if (_hacked == true)
+        //    {
+        //        if (Input.GetKeyDown(KeyCode.E))
+        //        {
+        //            var previous = _activeCamera;
+        //            _activeCamera++;
+
+
+        //            if (_activeCamera >= _cameras.Length)
+        //                _activeCamera = 0;
+
+
+        //            _cameras[_activeCamera].Priority = 11;
+        //            _cameras[previous].Priority = 9;
+        //        }
+
+        //        if (Input.GetKeyDown(KeyCode.Escape))
+        //        {
+        //            _hacked = false;
+        //            onHackEnded?.Invoke();
+        //            ResetCameras();
+        //        }
+        //    }
+        //}
 
         void ResetCameras()
         {

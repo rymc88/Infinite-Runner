@@ -5,6 +5,7 @@ using Game.Scripts.LiveObjects;
 using Unity.Cinemachine;
 using TMPro;
 using UnityEngine.Windows;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.Player
 {
@@ -43,7 +44,9 @@ namespace Game.Scripts.Player
             Drone.onExitFlightmode += ReturnPlayerControl;
 
             _frameworkInput.Player.Enable();
-        } 
+
+           
+        }
 
         private void Start()
         {
@@ -70,13 +73,11 @@ namespace Game.Scripts.Player
             if (_frameworkInput.Player.enabled)
             {
                 _playerGrounded = _controller.isGrounded;
+
                 //float h = Input.GetAxisRaw("Horizontal");
                 //float v = Input.GetAxisRaw("Vertical");
 
                 Vector2 move = _frameworkInput.Player.Move.ReadValue<Vector2>();
-
-                //float h = move.y;
-                // float v = move.x;
 
                 //transform.Rotate(transform.up, h);
                 transform.Rotate(transform.up, move.x);
@@ -86,10 +87,8 @@ namespace Game.Scripts.Player
 
                 var velocity = direction * _speed;
 
-
-
+                //transform.Rotate(transform.up, h);
                 transform.Rotate(transform.up, move.x);
-
 
 
                 _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
@@ -156,6 +155,8 @@ namespace Game.Scripts.Player
             Drone.onExitFlightmode -= ReturnPlayerControl;
 
             _frameworkInput.Player.Disable();
+
+           
         }
 
     }
