@@ -18899,7 +18899,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 1073608672}
   _speed: 5
   _propAnim: {fileID: 181193216}
-  _droneCam: {fileID: 0}
+  _droneCam: {fileID: 106664339}
   _interactableZone: {fileID: 1810029383}
 --- !u!65 &1073608671
 BoxCollider:
@@ -37887,7 +37887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -400}
   m_SizeDelta: {x: 765.6395, y: 118.2805}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107796545
