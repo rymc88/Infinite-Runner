@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.LiveObjects
 {
@@ -23,10 +24,35 @@ namespace Game.Scripts.LiveObjects
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
 
+        FrameworkInputActions _frameworkInputs;
+        InputAction _liftUpAction;
+        InputAction _liftDownAction;
+        InputAction _exitAction;
+
+        private void Awake()
+        {
+            _frameworkInputs = new FrameworkInputActions();
+        }
+
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += EnterDriveMode;
+
+            _frameworkInputs.Enable();
+
+            _frameworkInputs.Player.Disable();
+            _frameworkInputs.Drone.Disable();
+            _frameworkInputs.ForkLift.Enable();
+
+            _liftUpAction = _frameworkInputs.ForkLift.LiftUp;
+            _liftDownAction = _frameworkInputs.ForkLift.LiftDown;
+            _exitAction = _frameworkInputs.ForkLift.Exit;
+
+            
+
         }
+
+       
 
         private void EnterDriveMode(InteractableZone zone)
         {
@@ -55,16 +81,26 @@ namespace Game.Scripts.LiveObjects
             {
                 LiftControls();
                 CalcutateMovement();
-                if (Input.GetKeyDown(KeyCode.Escape))
+
+                if (_exitAction.WasPressedThisFrame())
+                {
                     ExitDriveMode();
+                }
+
+                //if (Input.GetKeyDown(KeyCode.Escape))
+                //    ExitDriveMode();
             }
 
         }
 
         private void CalcutateMovement()
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            //float h = Input.GetAxisRaw("Horizontal");
+            //float v = Input.GetAxisRaw("Vertical");
+
+            float h = _frameworkInputs.ForkLift.Horizontal.ReadValue<float>();
+            float v = _frameworkInputs.ForkLift.Vertical.ReadValue<float>();
+
             var direction = new Vector3(0, 0, v);
             var velocity = direction * _speed;
 
@@ -78,12 +114,22 @@ namespace Game.Scripts.LiveObjects
             }
         }
 
+      
+
         private void LiftControls()
         {
-            if (Input.GetKey(KeyCode.R))
+            if (_liftUpAction.IsPressed())
+            {
                 LiftUpRoutine();
-            else if (Input.GetKey(KeyCode.T))
+            }
+            else if (_liftDownAction.IsPressed())
+            {
                 LiftDownRoutine();
+            }
+            //if (Input.GetKey(KeyCode.R))
+            //    LiftUpRoutine();
+            //else if (Input.GetKey(KeyCode.T))
+            //    LiftDownRoutine();
         }
 
         private void LiftUpRoutine()
