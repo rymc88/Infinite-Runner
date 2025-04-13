@@ -24,32 +24,29 @@ namespace Game.Scripts.LiveObjects
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
 
-        FrameworkInputActions _frameworkInputs;
+        PlayerInputActions _playerActions;
         InputAction _liftUpAction;
         InputAction _liftDownAction;
         InputAction _exitAction;
 
         private void Awake()
         {
-            _frameworkInputs = new FrameworkInputActions();
+            _playerActions = new PlayerInputActions();
         }
 
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += EnterDriveMode;
 
-            _frameworkInputs.Enable();
+            _playerActions.Enable();
 
-            _frameworkInputs.Player.Disable();
-            _frameworkInputs.Drone.Disable();
-            _frameworkInputs.ForkLift.Enable();
+            _playerActions.Player.Disable();
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Enable();
 
-            _liftUpAction = _frameworkInputs.ForkLift.LiftUp;
-            _liftDownAction = _frameworkInputs.ForkLift.LiftDown;
-            _exitAction = _frameworkInputs.ForkLift.Exit;
-
-            
-
+            _liftUpAction = _playerActions.ForkLift.LiftUp;
+            _liftDownAction = _playerActions.ForkLift.LiftDown;
+            _exitAction = _playerActions.ForkLift.Exit;
         }
 
        
@@ -98,8 +95,8 @@ namespace Game.Scripts.LiveObjects
             //float h = Input.GetAxisRaw("Horizontal");
             //float v = Input.GetAxisRaw("Vertical");
 
-            float h = _frameworkInputs.ForkLift.Horizontal.ReadValue<float>();
-            float v = _frameworkInputs.ForkLift.Vertical.ReadValue<float>();
+            float h = _playerActions.ForkLift.Horizontal.ReadValue<float>();
+            float v = _playerActions.ForkLift.Vertical.ReadValue<float>();
 
             var direction = new Vector3(0, 0, v);
             var velocity = direction * _speed;
@@ -159,6 +156,10 @@ namespace Game.Scripts.LiveObjects
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= EnterDriveMode;
+
+            _playerActions.Player.Enable();
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Disable();
         }
 
     }

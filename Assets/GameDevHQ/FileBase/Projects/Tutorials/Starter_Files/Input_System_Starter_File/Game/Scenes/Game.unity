@@ -1026,11 +1026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9d76b14ce284b4364bd7dfb5511ef560, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.4821
+      value: 8.056
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9d76b14ce284b4364bd7dfb5511ef560, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.59
+      value: -4.637
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9d76b14ce284b4364bd7dfb5511ef560, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3074,7 +3074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86c443bd499cba4195e4024731710ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoneType: 1
+  _zoneType: 2
   _zoneID: 6
   _requiredID: 5
   _displayMessage: Break the Crate
@@ -6124,7 +6124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 97d8603973db24ad9a847ee6769617dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.624
+      value: 12.162
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 97d8603973db24ad9a847ee6769617dc, type: 3}
       propertyPath: m_LocalPosition.y

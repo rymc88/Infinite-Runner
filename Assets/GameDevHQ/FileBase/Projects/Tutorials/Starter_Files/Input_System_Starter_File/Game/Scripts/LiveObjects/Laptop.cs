@@ -24,11 +24,11 @@ namespace Game.Scripts.LiveObjects
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
-        FrameworkInputActions _frameworkInputs;
+        PlayerInputActions _playerActions;
 
         private void Awake()
         {
-            _frameworkInputs = new FrameworkInputActions();
+            _playerActions = new PlayerInputActions();
         }
 
         private void OnEnable()
@@ -38,10 +38,10 @@ namespace Game.Scripts.LiveObjects
 
             
 
-            _frameworkInputs.Player.Enable();
+            _playerActions.Player.Enable();
 
-            _frameworkInputs.Player.Interact.performed += Interact_performed;
-            _frameworkInputs.Player.Exit.performed += Exit_performed;
+            _playerActions.Player.Press.performed += Press_performed;
+            _playerActions.Player.Exit.performed += Exit_performed;
         }
 
         private void Exit_performed(InputAction.CallbackContext context)
@@ -55,7 +55,7 @@ namespace Game.Scripts.LiveObjects
 
         }
 
-        private void Interact_performed(InputAction.CallbackContext context)
+        private void Press_performed(InputAction.CallbackContext context)
         {
             if (_hacked == true)
             {

@@ -25,11 +25,11 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
-        private FrameworkInputActions _frameworkInput;
+        private PlayerInputActions _playerActions;
 
         private void Awake()
         {
-            _frameworkInput = new FrameworkInputActions();
+            _playerActions = new PlayerInputActions();
         }
 
         private void OnEnable()
@@ -43,7 +43,7 @@ namespace Game.Scripts.Player
             Drone.OnEnterFlightMode += ReleasePlayerControl;
             Drone.onExitFlightmode += ReturnPlayerControl;
 
-            _frameworkInput.Player.Enable();
+            _playerActions.Player.Enable();
 
            
         }
@@ -70,14 +70,14 @@ namespace Game.Scripts.Player
 
         private void CalcutateMovement()
         {
-            if (_frameworkInput.Player.enabled)
+            if (_playerActions.Player.enabled)
             {
                 _playerGrounded = _controller.isGrounded;
 
                 //float h = Input.GetAxisRaw("Horizontal");
                 //float v = Input.GetAxisRaw("Vertical");
 
-                Vector2 move = _frameworkInput.Player.Move.ReadValue<Vector2>();
+                Vector2 move = _playerActions.Player.Move.ReadValue<Vector2>();
 
                 //transform.Rotate(transform.up, h);
                 transform.Rotate(transform.up, move.x);
@@ -154,7 +154,7 @@ namespace Game.Scripts.Player
             Drone.OnEnterFlightMode -= ReleasePlayerControl;
             Drone.onExitFlightmode -= ReturnPlayerControl;
 
-            _frameworkInput.Player.Disable();
+            _playerActions.Player.Disable();
 
            
         }

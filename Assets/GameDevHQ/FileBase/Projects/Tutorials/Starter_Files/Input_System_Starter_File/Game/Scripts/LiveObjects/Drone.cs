@@ -31,21 +31,21 @@ namespace Game.Scripts.LiveObjects
         public static event Action OnEnterFlightMode;
         public static event Action onExitFlightmode;
 
-        private FrameworkInputActions _frameworkInputs;
+        private PlayerInputActions _playerACtions;
 
         private void Awake()
         {
-            _frameworkInputs = new FrameworkInputActions();
+            _playerACtions = new PlayerInputActions();
         }
 
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += EnterFlightMode;
 
-            _frameworkInputs.Player.Disable();
-            _frameworkInputs.Drone.Enable();
+            _playerACtions.Player.Disable();
+            _playerACtions.Drone.Enable();
 
-            _frameworkInputs.Drone.Exit.performed += Exit_performed;
+            _playerACtions.Drone.Exit.performed += Exit_performed;
 
         }
 
@@ -104,7 +104,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateMovementUpdate()
         {
-            float yaw = _frameworkInputs.Drone.Yaw.ReadValue<float>();
+            float yaw = _playerACtions.Drone.Yaw.ReadValue<float>();
 
             if(yaw < 0)
             {
@@ -135,7 +135,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateMovementFixedUpdate()
         {
-            float thrust = _frameworkInputs.Drone.Thrust.ReadValue<float>();
+            float thrust = _playerACtions.Drone.Thrust.ReadValue<float>();
             
             if(thrust > 0)
             {
@@ -158,7 +158,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateTilt()
         {
-            Vector2 tilt = _frameworkInputs.Drone.Tilt.ReadValue<Vector2>();
+            Vector2 tilt = _playerACtions.Drone.Tilt.ReadValue<Vector2>();
             //int roll = _frameworkInputs.Drone
 
             if(tilt.x < 0)
@@ -198,10 +198,10 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onZoneInteractionComplete -= EnterFlightMode;
 
-            _frameworkInputs.Drone.Exit.performed -= Exit_performed;
+            _playerACtions.Drone.Exit.performed -= Exit_performed;
 
-            _frameworkInputs.Drone.Disable();
-            _frameworkInputs.Player.Enable();
+            _playerACtions.Drone.Disable();
+            _playerACtions.Player.Enable();
             
         }
     }
