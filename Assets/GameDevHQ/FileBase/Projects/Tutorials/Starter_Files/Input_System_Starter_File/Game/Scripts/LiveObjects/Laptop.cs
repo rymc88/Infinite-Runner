@@ -157,6 +157,11 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onHoldStarted -= InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded -= InteractableZone_onHoldEnded;
+
+            _playerActions.Player.Disable();
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Disable();
+            _playerActions.Crate.Disable();
         }
     }
 

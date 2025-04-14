@@ -83,8 +83,12 @@ namespace Game.Scripts.LiveObjects
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += SetMarker;
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Disable();
+            _playerActions.Crate.Disable();
 
             _playerActions.Player.Enable();
+
             _press = _playerActions.Player.Press;
             _pressHold = _playerActions.Player.PressHold;
             //_playerActions.Player.Press.performed += Press_performed;
@@ -316,6 +320,9 @@ namespace Game.Scripts.LiveObjects
             InteractableZone.onZoneInteractionComplete -= SetMarker;
 
             _playerActions.Player.Disable();
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Disable();
+            _playerActions.Crate.Disable();
             //_playerActions.Player.Press.performed -= Press_performed;
 
         }       

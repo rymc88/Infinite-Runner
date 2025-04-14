@@ -157,9 +157,10 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onZoneInteractionComplete -= EnterDriveMode;
 
-            _playerActions.Player.Enable();
+            _playerActions.Player.Disable();
             _playerActions.Drone.Disable();
             _playerActions.ForkLift.Disable();
+            _playerActions.Crate.Disable();
         }
 
     }

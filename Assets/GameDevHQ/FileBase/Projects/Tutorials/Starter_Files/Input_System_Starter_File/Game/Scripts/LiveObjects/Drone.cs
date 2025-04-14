@@ -31,21 +31,21 @@ namespace Game.Scripts.LiveObjects
         public static event Action OnEnterFlightMode;
         public static event Action onExitFlightmode;
 
-        private PlayerInputActions _playerACtions;
+        private PlayerInputActions _playerActions;
 
         private void Awake()
         {
-            _playerACtions = new PlayerInputActions();
+            _playerActions = new PlayerInputActions();
         }
 
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += EnterFlightMode;
 
-            _playerACtions.Player.Disable();
-            _playerACtions.Drone.Enable();
+            _playerActions.Player.Disable();
+            _playerActions.Drone.Enable();
 
-            _playerACtions.Drone.Exit.performed += Exit_performed;
+            _playerActions.Drone.Exit.performed += Exit_performed;
 
         }
 
@@ -104,7 +104,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateMovementUpdate()
         {
-            float yaw = _playerACtions.Drone.Yaw.ReadValue<float>();
+            float yaw = _playerActions.Drone.Yaw.ReadValue<float>();
 
             if(yaw < 0)
             {
@@ -135,7 +135,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateMovementFixedUpdate()
         {
-            float thrust = _playerACtions.Drone.Thrust.ReadValue<float>();
+            float thrust = _playerActions.Drone.Thrust.ReadValue<float>();
             
             if(thrust > 0)
             {
@@ -158,7 +158,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateTilt()
         {
-            Vector2 tilt = _playerACtions.Drone.Tilt.ReadValue<Vector2>();
+            Vector2 tilt = _playerActions.Drone.Tilt.ReadValue<Vector2>();
             //int roll = _frameworkInputs.Drone
 
             if(tilt.x < 0)
@@ -198,11 +198,13 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onZoneInteractionComplete -= EnterFlightMode;
 
-            _playerACtions.Drone.Exit.performed -= Exit_performed;
+            _playerActions.Drone.Exit.performed -= Exit_performed;
 
-            _playerACtions.Drone.Disable();
-            _playerACtions.Player.Enable();
-            
+            _playerActions.Player.Disable();
+            _playerActions.Drone.Disable();
+            _playerActions.ForkLift.Disable();
+            _playerActions.Crate.Disable();
+
         }
     }
 }

@@ -40,15 +40,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Break",
-                    "type": "Button",
-                    "id": "a8f7d575-baea-4c38-bfac-44b1fc0a0445",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -203,17 +194,6 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Exit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "83cb80bb-3835-4709-a69b-ef8608713776",
-                    "path": "<Keyboard>/b",
-                    "interactions": "MultiTap(tapCount=3),Hold(duration=1)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Break",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -797,6 +777,45 @@
                     "action": "Horizontal",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Crate",
+            "id": "879c2e32-5afd-4e72-b535-38312f4e96d3",
+            "actions": [
+                {
+                    "name": "PressHold",
+                    "type": "Button",
+                    "id": "8ebf2dd4-3a83-4f70-b526-af73ce59cae6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold(duration=1),MultiTap(tapCount=3)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5da8ad6-a4fa-4457-9cb9-ee8ff71d1d05",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "PressHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bd24903-882d-45b4-b803-20473b0ef202",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PressHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -62,15 +62,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Break"",
-                    ""type"": ""Button"",
-                    ""id"": ""a8f7d575-baea-4c38-bfac-44b1fc0a0445"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -225,17 +216,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""83cb80bb-3835-4709-a69b-ef8608713776"",
-                    ""path"": ""<Keyboard>/b"",
-                    ""interactions"": ""MultiTap(tapCount=3),Hold(duration=1)"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Break"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -821,6 +801,45 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Crate"",
+            ""id"": ""879c2e32-5afd-4e72-b535-38312f4e96d3"",
+            ""actions"": [
+                {
+                    ""name"": ""PressHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ebf2dd4-3a83-4f70-b526-af73ce59cae6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1),MultiTap(tapCount=3)"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c5da8ad6-a4fa-4457-9cb9-ee8ff71d1d05"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""PressHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bd24903-882d-45b4-b803-20473b0ef202"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -854,7 +873,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Press = m_Player.FindAction("Press", throwIfNotFound: true);
         m_Player_PressHold = m_Player.FindAction("PressHold", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
-        m_Player_Break = m_Player.FindAction("Break", throwIfNotFound: true);
         // Drone
         m_Drone = asset.FindActionMap("Drone", throwIfNotFound: true);
         m_Drone_Tilt = m_Drone.FindAction("Tilt", throwIfNotFound: true);
@@ -868,6 +886,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_ForkLift_Exit = m_ForkLift.FindAction("Exit", throwIfNotFound: true);
         m_ForkLift_Vertical = m_ForkLift.FindAction("Vertical", throwIfNotFound: true);
         m_ForkLift_Horizontal = m_ForkLift.FindAction("Horizontal", throwIfNotFound: true);
+        // Crate
+        m_Crate = asset.FindActionMap("Crate", throwIfNotFound: true);
+        m_Crate_PressHold = m_Crate.FindAction("PressHold", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -875,6 +896,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Drone.enabled, "This will cause a leak and performance issues, PlayerInputActions.Drone.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_ForkLift.enabled, "This will cause a leak and performance issues, PlayerInputActions.ForkLift.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Crate.enabled, "This will cause a leak and performance issues, PlayerInputActions.Crate.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -940,7 +962,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Press;
     private readonly InputAction m_Player_PressHold;
     private readonly InputAction m_Player_Exit;
-    private readonly InputAction m_Player_Break;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -949,7 +970,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Press => m_Wrapper.m_Player_Press;
         public InputAction @PressHold => m_Wrapper.m_Player_PressHold;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
-        public InputAction @Break => m_Wrapper.m_Player_Break;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -971,9 +991,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
-            @Break.started += instance.OnBreak;
-            @Break.performed += instance.OnBreak;
-            @Break.canceled += instance.OnBreak;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -990,9 +1007,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
-            @Break.started -= instance.OnBreak;
-            @Break.performed -= instance.OnBreak;
-            @Break.canceled -= instance.OnBreak;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1158,6 +1172,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public ForkLiftActions @ForkLift => new ForkLiftActions(this);
+
+    // Crate
+    private readonly InputActionMap m_Crate;
+    private List<ICrateActions> m_CrateActionsCallbackInterfaces = new List<ICrateActions>();
+    private readonly InputAction m_Crate_PressHold;
+    public struct CrateActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public CrateActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PressHold => m_Wrapper.m_Crate_PressHold;
+        public InputActionMap Get() { return m_Wrapper.m_Crate; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CrateActions set) { return set.Get(); }
+        public void AddCallbacks(ICrateActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CrateActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CrateActionsCallbackInterfaces.Add(instance);
+            @PressHold.started += instance.OnPressHold;
+            @PressHold.performed += instance.OnPressHold;
+            @PressHold.canceled += instance.OnPressHold;
+        }
+
+        private void UnregisterCallbacks(ICrateActions instance)
+        {
+            @PressHold.started -= instance.OnPressHold;
+            @PressHold.performed -= instance.OnPressHold;
+            @PressHold.canceled -= instance.OnPressHold;
+        }
+
+        public void RemoveCallbacks(ICrateActions instance)
+        {
+            if (m_Wrapper.m_CrateActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICrateActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CrateActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CrateActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CrateActions @Crate => new CrateActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -1182,7 +1242,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPress(InputAction.CallbackContext context);
         void OnPressHold(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
-        void OnBreak(InputAction.CallbackContext context);
     }
     public interface IDroneActions
     {
@@ -1198,5 +1257,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnExit(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
         void OnHorizontal(InputAction.CallbackContext context);
+    }
+    public interface ICrateActions
+    {
+        void OnPressHold(InputAction.CallbackContext context);
     }
 }
