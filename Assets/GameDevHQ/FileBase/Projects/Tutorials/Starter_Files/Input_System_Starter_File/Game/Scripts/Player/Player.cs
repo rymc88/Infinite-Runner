@@ -16,6 +16,7 @@ namespace Game.Scripts.Player
         private Animator _anim;
         [SerializeField]
         private float _speed = 5.0f;
+        [SerializeField] private float _rotateSpeed = .5f;
         private bool _playerGrounded;
         [SerializeField]
         private Detonator _detonator;
@@ -80,7 +81,7 @@ namespace Game.Scripts.Player
                 Vector2 move = _playerActions.Player.Move.ReadValue<Vector2>();
 
                 //transform.Rotate(transform.up, h);
-                transform.Rotate(transform.up, move.x);
+                transform.Rotate(transform.up, (move.x * _rotateSpeed));
 
                 //var direction = transform.forward * v;
                 var direction = transform.forward * move.y;
@@ -88,7 +89,7 @@ namespace Game.Scripts.Player
                 var velocity = direction * _speed;
 
                 //transform.Rotate(transform.up, h);
-                transform.Rotate(transform.up, move.x);
+                //transform.Rotate(transform.up, move.x);
 
 
                 _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));

@@ -19,6 +19,7 @@ namespace Game.Scripts.LiveObjects
         private Rigidbody _rigidbody;
         [SerializeField]
         private float _speed = 5f;
+        [SerializeField] float _rotateMultiplier = .15f;
         private bool _inFlightMode = false;
         [SerializeField]
         private Animator _propAnim;
@@ -109,13 +110,13 @@ namespace Game.Scripts.LiveObjects
             if(yaw < 0)
             {
                 var tempRot = transform.localRotation.eulerAngles;
-                tempRot.y -= _speed / 3;
+                tempRot.y -= _speed * _rotateMultiplier;
                 transform.localRotation = Quaternion.Euler(tempRot);
             }
             if(yaw > 0)
             {
                 var tempRot = transform.localRotation.eulerAngles;
-                tempRot.y += _speed / 3;
+                tempRot.y += _speed * _rotateMultiplier;
                 transform.localRotation = Quaternion.Euler(tempRot);
             }
 
