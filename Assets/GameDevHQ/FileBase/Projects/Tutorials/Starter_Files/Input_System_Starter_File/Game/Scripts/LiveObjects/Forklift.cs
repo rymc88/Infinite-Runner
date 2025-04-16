@@ -24,32 +24,11 @@ namespace Game.Scripts.LiveObjects
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
 
-        PlayerInputActions _playerActions;
-        InputAction _liftUpAction;
-        InputAction _liftDownAction;
-        InputAction _exitAction;
-
-        private void Awake()
-        {
-            _playerActions = new PlayerInputActions();
-        }
-
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += EnterDriveMode;
-
-            _playerActions.Enable();
-
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Enable();
-
-            _liftUpAction = _playerActions.ForkLift.LiftUp;
-            _liftDownAction = _playerActions.ForkLift.LiftDown;
-            _exitAction = _playerActions.ForkLift.Exit;
         }
 
-       
 
         private void EnterDriveMode(InteractableZone zone)
         {
@@ -79,54 +58,52 @@ namespace Game.Scripts.LiveObjects
                 LiftControls();
                 CalcutateMovement();
 
-                if (_exitAction.WasPressedThisFrame())
+                if(_interactableZone.playerInput != null)
                 {
-                    ExitDriveMode();
+                    if (_interactableZone.playerInput.actions["Exit"].IsPressed())
+                    {
+                        ExitDriveMode();
+                    }
                 }
-
-                //if (Input.GetKeyDown(KeyCode.Escape))
-                //    ExitDriveMode();
             }
-
         }
 
         private void CalcutateMovement()
         {
-            //float h = Input.GetAxisRaw("Horizontal");
-            //float v = Input.GetAxisRaw("Vertical");
-
-            float h = _playerActions.ForkLift.Horizontal.ReadValue<float>();
-            float v = _playerActions.ForkLift.Vertical.ReadValue<float>();
-
-            var direction = new Vector3(0, 0, v);
-            var velocity = direction * _speed;
-
-            transform.Translate(velocity * Time.deltaTime);
-
-            if (Mathf.Abs(v) > 0)
+            if(_interactableZone.playerInput != null)
             {
-                var tempRot = transform.rotation.eulerAngles;
-                tempRot.y += h * _speed / 2;
-                transform.rotation = Quaternion.Euler(tempRot);
+                float h = _interactableZone.playerInput.actions["Horizontal"].ReadValue<float>();
+                float v = _interactableZone.playerInput.actions["Vertical"].ReadValue<float>();
+
+                var direction = new Vector3(0, 0, v);
+                var velocity = direction * _speed;
+
+                transform.Translate(velocity * Time.deltaTime);
+
+                if (Mathf.Abs(v) > 0)
+                {
+                    var tempRot = transform.rotation.eulerAngles;
+                    tempRot.y += h * _speed / 2;
+                    transform.rotation = Quaternion.Euler(tempRot);
+                }
+
             }
         }
 
       
-
         private void LiftControls()
         {
-            if (_liftUpAction.IsPressed())
+            if(_interactableZone.playerInput != null)
             {
-                LiftUpRoutine();
+                if (_interactableZone.playerInput.actions["LiftUp"].IsPressed())
+                {
+                    LiftUpRoutine();
+                }
+                else if (_interactableZone.playerInput.actions["LiftDown"].IsPressed())
+                {
+                    LiftDownRoutine();
+                }
             }
-            else if (_liftDownAction.IsPressed())
-            {
-                LiftDownRoutine();
-            }
-            //if (Input.GetKey(KeyCode.R))
-            //    LiftUpRoutine();
-            //else if (Input.GetKey(KeyCode.T))
-            //    LiftDownRoutine();
         }
 
         private void LiftUpRoutine()
@@ -157,10 +134,6 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onZoneInteractionComplete -= EnterDriveMode;
 
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-            _playerActions.Crate.Disable();
         }
 
     }

@@ -80,9 +80,6 @@ namespace Game.Scripts.LiveObjects
                 CalculateTilt();
                 CalculateMovementUpdate();
                 Exit_performed();
-
-                
-
             }
         }
 
@@ -98,7 +95,6 @@ namespace Game.Scripts.LiveObjects
             if(_interactableZone.playerInput != null)
             {
                 float yaw = _interactableZone.playerInput.actions["Yaw"].ReadValue<float>();
-                //float yaw = _playerActions.Drone.Yaw.ReadValue<float>();
 
                 if (yaw < 0)
                 {
@@ -114,19 +110,6 @@ namespace Game.Scripts.LiveObjects
                 }
             }
            
-
-            //if (Input.GetKey(KeyCode.LeftArrow))
-            //{
-            //    var tempRot = transform.localRotation.eulerAngles;
-            //    tempRot.y -= _speed / 3;
-            //    transform.localRotation = Quaternion.Euler(tempRot);
-            //}
-            //if (Input.GetKey(KeyCode.RightArrow))
-            //{
-            //    var tempRot = transform.localRotation.eulerAngles;
-            //    tempRot.y += _speed / 3;
-            //    transform.localRotation = Quaternion.Euler(tempRot);
-            //}
         }
 
         private void CalculateMovementFixedUpdate()
@@ -145,14 +128,6 @@ namespace Game.Scripts.LiveObjects
                 }
             }
 
-            //if (Input.GetKey(KeyCode.Space))
-            //{
-            //    _rigidbody.AddForce(transform.up * _speed, ForceMode.Acceleration);
-            //}
-            //if (Input.GetKey(KeyCode.V))
-            //{
-            //    _rigidbody.AddForce(-transform.up * _speed, ForceMode.Acceleration);
-            //}
         }
 
         private void CalculateTilt()
@@ -183,33 +158,11 @@ namespace Game.Scripts.LiveObjects
                 }
             }
 
-            //Vector2 tilt = _playerActions.Drone.Tilt.ReadValue<Vector2>();
-            //int roll = _frameworkInputs.Drone
-
-            
-
-            //if (Input.GetKey(KeyCode.A)) 
-            //    transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
-            //else if (Input.GetKey(KeyCode.D))
-            //    transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
-            //else if (Input.GetKey(KeyCode.W))
-            //    transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
-            //else if (Input.GetKey(KeyCode.S))
-            //    transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
-            //else 
-            //    transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
         }
 
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= EnterFlightMode;
-
-            //_playerActions.Drone.Exit.performed -= Exit_performed;
-
-            //_playerActions.Player.Disable();
-            //_playerActions.Drone.Disable();
-            //_playerActions.ForkLift.Disable();
-            //_playerActions.Crate.Disable();
 
         }
     }
