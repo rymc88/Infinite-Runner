@@ -73,26 +73,12 @@ namespace Game.Scripts.LiveObjects
         public static event Action<int> onHoldStarted;
         public static event Action<int> onHoldEnded;
 
-        private void Awake()
-        {
-            _playerActions = new PlayerInputActions();
-           
-        }
-
+     
        
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += SetMarker;
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-            _playerActions.Crate.Disable();
-
-            _playerActions.Player.Enable();
-
-            _press = _playerActions.Player.Press;
-            _pressHold = _playerActions.Player.PressHold;
-            //_playerActions.Player.Press.performed += Press_performed;
-
+           
         }
 
         //private void Press_performed(InputAction.CallbackContext context)
@@ -138,6 +124,16 @@ namespace Game.Scripts.LiveObjects
         {
             if (other.CompareTag("Player") && _currentZoneID > _requiredID)
             {
+                PlayerInput playerInput = other.GetComponent<PlayerInput>();
+                _press = playerInput.actions["Press"];
+                _pressHold = playerInput.actions["PressHold"];
+
+                if(playerInput == null)
+                {
+                    Debug.Log("Player Input is null");
+                }
+
+                
                 switch (_zoneType)
                 {
                     case ZoneType.Collectable:
@@ -146,12 +142,12 @@ namespace Game.Scripts.LiveObjects
                             _inZone = true;
                             if (_displayMessage != null)
                             {
-                                string message = $"Press the {_playerActions.Player.Press.GetBindingDisplayString()} key to {_displayMessage}.";
+                                string message = $"Press the {_press.GetBindingDisplayString()} key to {_displayMessage}.";
                                 //string message = $"Press the {_zoneKeyInput.ToString()} key to {_displayMessage}.";
                                 UIManager.Instance.DisplayInteractableZoneMessage(true, message);
                             }
                             else
-                                UIManager.Instance.DisplayInteractableZoneMessage(true, $"Press the {_playerActions.Player.Press.GetBindingDisplayString()} key to collect");
+                                UIManager.Instance.DisplayInteractableZoneMessage(true, $"Press the __ key to collect");
                         }
                         break;
 
@@ -161,11 +157,11 @@ namespace Game.Scripts.LiveObjects
                             _inZone = true;
                             if (_displayMessage != null)
                             {
-                                string message = $"Press the {_playerActions.Player.Press.GetBindingDisplayString()} key to {_displayMessage}.";
+                                string message = $"Press the {_press.GetBindingDisplayString()} key to {_displayMessage}.";
                                 UIManager.Instance.DisplayInteractableZoneMessage(true, message);
                             }
                             else
-                                UIManager.Instance.DisplayInteractableZoneMessage(true, $"Press the {_playerActions.Player.Press.GetBindingDisplayString()} key to perform action");
+                                UIManager.Instance.DisplayInteractableZoneMessage(true, $"Press the __ key to perform action");
                         }
                         break;
 
@@ -173,24 +169,23 @@ namespace Game.Scripts.LiveObjects
                         _inZone = true;
                         if (_displayMessage != null)
                         {
-                            string message = $"Press the {_playerActions.Player.PressHold.GetBindingDisplayString()} key to {_displayMessage}.";
+                            string message = $"Press the {_pressHold.GetBindingDisplayString()} key to {_displayMessage}.";
                             UIManager.Instance.DisplayInteractableZoneMessage(true, message);
                         }
                         else
-                            UIManager.Instance.DisplayInteractableZoneMessage(true, $"Hold the {_playerActions.Player.Press.GetBindingDisplayString()} key to perform action");
+                            UIManager.Instance.DisplayInteractableZoneMessage(true, $"Hold the __ key to perform action");
                         break;
                 }
             }
         }
 
-        
+
         private void Update()
         {
             if (_inZone == true)
             {
-
                 //if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
-                if(_press.WasPerformedThisFrame() && _keyState != KeyState.PressHold)
+                if (_press.WasPerformedThisFrame() && _keyState != KeyState.PressHold)
                 {
                     //press
                     switch (_zoneType)
@@ -318,12 +313,6 @@ namespace Game.Scripts.LiveObjects
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= SetMarker;
-
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-            _playerActions.Crate.Disable();
-            //_playerActions.Player.Press.performed -= Press_performed;
 
         }       
         

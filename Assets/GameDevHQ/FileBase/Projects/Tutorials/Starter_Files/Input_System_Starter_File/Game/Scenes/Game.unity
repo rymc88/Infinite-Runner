@@ -5733,6 +5733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 359860634}
   - component: {fileID: 359860633}
+  - component: {fileID: 359860635}
   - component: {fileID: 359860632}
   m_Layer: 0
   m_Name: Player
@@ -5779,10 +5780,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _rotateSpeed: 0.5
+  _rotateSpeed: 1
   _detonator: {fileID: 2496590969500232579}
   _followCam: {fileID: 1266060218}
   _model: {fileID: 852618543}
+  _playerInput: {fileID: 359860635}
 --- !u!4 &359860634
 Transform:
   m_ObjectHideFlags: 0
@@ -5799,6 +5801,92 @@ Transform:
   - {fileID: 744979006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -102.957, z: 0}
+--- !u!114 &359860635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359860631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9ed5a61fdf2161545b89f6290eda287b, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c35c4cbf-f2dd-4c6e-9025-64267fe7f646
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 626bfcb0-7481-4edc-8207-f6e34c924695
+    m_ActionName: 'Player/Press[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18c0a797-c386-467c-8ed6-86839da9b881
+    m_ActionName: 'Player/PressHold[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ac25883-e3b7-4362-8bcc-f07ef35e8177
+    m_ActionName: 'Player/Exit[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 58ff55df-121f-4ca8-a7b6-e3a780639887
+    m_ActionName: 'Drone/Tilt[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2985700b-a13e-4616-a689-ed307a0f286a
+    m_ActionName: 'Drone/Thrust[/Keyboard/v,/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fad5f53a-4267-4a15-a84f-db0caf34facc
+    m_ActionName: 'Drone/Yaw[/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5a21fe45-8caa-4b33-90d8-288a4aab7664
+    m_ActionName: 'Drone/Exit[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 501a918d-2d8b-471a-9525-e3e51830d26f
+    m_ActionName: 'ForkLift/LiftUp[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b8a44f1e-d7db-4192-97ae-775bc52c5c8b
+    m_ActionName: 'ForkLift/LiftDown[/Keyboard/t]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b699d4c0-8dfe-4f38-bc2a-a37930599394
+    m_ActionName: 'ForkLift/Exit[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ff2930ae-ec60-41a8-a081-91f5d2e3669b
+    m_ActionName: 'ForkLift/Vertical[/Keyboard/s,/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87a726a6-c43d-4df5-a387-1a833639ca78
+    m_ActionName: 'ForkLift/Horizontal[/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8ebf2dd4-3a83-4f70-b526-af73ce59cae6
+    m_ActionName: 'Crate/PressHold[/Keyboard/space]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &369121378
 PrefabInstance:
   m_ObjectHideFlags: 0

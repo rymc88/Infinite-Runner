@@ -26,11 +26,25 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
-        private PlayerInputActions _playerActions;
+        [SerializeField] private PlayerInput _playerInput;
+        //private PlayerInputActions _playerActions;
+        
 
         private void Awake()
         {
-            _playerActions = new PlayerInputActions();
+            //_playerActions = new PlayerInputActions();
+
+            //if(_playerActions == null)
+            //{
+            //    Debug.Log("Player Input Actions is null", this.gameObject);
+            //}
+
+            //_playerInput.GetComponent<PlayerInput>();
+
+            if(_playerInput == null)
+            {
+                Debug.Log("Player Input is null", this.gameObject);
+            }
         }
 
         private void OnEnable()
@@ -41,12 +55,17 @@ namespace Game.Scripts.Player
             Forklift.onDriveModeEntered += ReleasePlayerControl;
             Forklift.onDriveModeExited += ReturnPlayerControl;
             Forklift.onDriveModeEntered += HidePlayer;
-            Drone.OnEnterFlightMode += ReleasePlayerControl;
+            Drone.OnEnterFlightMode += ActivateDroneControls;
             Drone.onExitFlightmode += ReturnPlayerControl;
 
-            _playerActions.Player.Enable();
+            //_playerActions.Player.Enable();
+            //_playerActions.Drone.Enable();
+            //_playerActions.ForkLift.Enable();
+            //_playerActions.Crate.Enable();
 
-           
+
+            SwitchActionMap("Player");
+
         }
 
         private void Start()
@@ -62,6 +81,8 @@ namespace Game.Scripts.Player
                 Debug.Log("Failed to connect the Animator");
         }
 
+
+
         private void Update()
         {
             if (_canMove == true)
@@ -69,16 +90,53 @@ namespace Game.Scripts.Player
 
         }
 
+        public void SwitchActionMap(string mapName)
+        {
+            if (_playerInput == null)
+            {
+                Debug.LogWarning("PlayerInput reference not set.");
+                return;
+            }
+
+            var inputAsset = _playerInput.actions;
+
+            if (inputAsset.FindActionMap(mapName) == null)
+            {
+                Debug.LogWarning($"Action Map '{mapName}' not found in the InputActionAsset.");
+                return;
+            }
+
+            _playerInput.SwitchCurrentActionMap(mapName);
+            Debug.Log($"Switched to action map: {mapName}");
+
+            foreach (var map in inputAsset.actionMaps)
+            {
+                Debug.Log($"Map: {map.name} | Enabled: {map.enabled}");
+            }
+        }
+
+        private void ActivateDroneControls()
+        {
+            ReleasePlayerControl();
+            SwitchActionMap("Drone");
+        }
+
+        //public void SwitchToActionMap(string mapName)
+        //{
+        //    _playerInput.SwitchCurrentActionMap(mapName);
+        //}
+
         private void CalcutateMovement()
         {
-            if (_playerActions.Player.enabled)
+            if (_playerInput.currentActionMap.name == "Player")
             {
                 _playerGrounded = _controller.isGrounded;
 
                 //float h = Input.GetAxisRaw("Horizontal");
                 //float v = Input.GetAxisRaw("Vertical");
 
-                Vector2 move = _playerActions.Player.Move.ReadValue<Vector2>();
+                //Vector2 move = _playerActions.Player.Move.ReadValue<Vector2>();
+                Vector2 move = _playerInput.actions["Move"].ReadValue<Vector2>();
 
                 //transform.Rotate(transform.up, h);
                 transform.Rotate(transform.up, (move.x * _rotateSpeed));
@@ -104,7 +162,7 @@ namespace Game.Scripts.Player
 
                 _controller.Move(velocity * Time.deltaTime);
             }
-                       
+
 
         }
 
@@ -118,6 +176,7 @@ namespace Game.Scripts.Player
                 case 2: //Trigger Explosion
                     TriggerExplosive();
                     break;
+               
             }
         }
 
@@ -155,7 +214,7 @@ namespace Game.Scripts.Player
             Drone.OnEnterFlightMode -= ReleasePlayerControl;
             Drone.onExitFlightmode -= ReturnPlayerControl;
 
-            _playerActions.Player.Disable();
+            //_playerActions.Player.Disable();
 
            
         }
