@@ -50,7 +50,7 @@ namespace Game.Scripts.LiveObjects
 
         private bool _inHoldState = false;
 
-        PlayerInputActions _playerActions;
+        public PlayerInput playerInput;
         InputAction _press;
         InputAction _pressHold;
         
@@ -81,59 +81,20 @@ namespace Game.Scripts.LiveObjects
            
         }
 
-        //private void Press_performed(InputAction.CallbackContext context)
-        //{
-        //    if (_inZone == true)
-        //    {
-
-
-        //        switch (_zoneType)
-        //        {
-        //            case ZoneType.Collectable:
-        //                if (_itemsCollected == false)
-        //                {
-        //                    CollectItems();
-        //                    _itemsCollected = true;
-        //                    UIManager.Instance.DisplayInteractableZoneMessage(false);
-        //                }
-        //                break;
-
-        //            case ZoneType.Action:
-        //                if (_actionPerformed == false)
-        //                {
-        //                    PerformAction();
-        //                    _actionPerformed = true;
-        //                    UIManager.Instance.DisplayInteractableZoneMessage(false);
-        //                }
-        //                break;
-
-        //            case ZoneType.HoldAction:
-        //                PerformHoldAction();
-        //                break;
-
-        //            default:
-        //                Debug.Log("Default Case");
-        //                break;
-        //        }
-
-        //    }
-        //}
-
-       
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player") && _currentZoneID > _requiredID)
             {
-                PlayerInput playerInput = other.GetComponent<PlayerInput>();
-                _press = playerInput.actions["Press"];
-                _pressHold = playerInput.actions["PressHold"];
+                playerInput = other.GetComponent<PlayerInput>();
 
                 if(playerInput == null)
                 {
                     Debug.Log("Player Input is null");
                 }
 
-                
+                _press = playerInput.actions["Press"];
+                _pressHold = playerInput.actions["PressHold"];
+
                 switch (_zoneType)
                 {
                     case ZoneType.Collectable:
@@ -177,6 +138,7 @@ namespace Game.Scripts.LiveObjects
                         break;
                 }
             }
+
         }
 
 

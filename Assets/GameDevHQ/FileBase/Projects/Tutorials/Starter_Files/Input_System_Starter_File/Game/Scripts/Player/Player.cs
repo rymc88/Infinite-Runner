@@ -52,11 +52,10 @@ namespace Game.Scripts.Player
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
             Laptop.onHackComplete += ReleasePlayerControl;
             Laptop.onHackEnded += ReturnPlayerControl;
-            Forklift.onDriveModeEntered += ReleasePlayerControl;
-            Forklift.onDriveModeExited += ReturnPlayerControl;
-            Forklift.onDriveModeEntered += HidePlayer;
+            Forklift.onDriveModeEntered += ActivateForkLiftControls;
+            Forklift.onDriveModeExited += DeactivateForkLiftControls;
             Drone.OnEnterFlightMode += ActivateDroneControls;
-            Drone.onExitFlightmode += ReturnPlayerControl;
+            Drone.onExitFlightmode += DeactivateDroneControls;
 
             //_playerActions.Player.Enable();
             //_playerActions.Drone.Enable();
@@ -121,10 +120,24 @@ namespace Game.Scripts.Player
             SwitchActionMap("Drone");
         }
 
-        //public void SwitchToActionMap(string mapName)
-        //{
-        //    _playerInput.SwitchCurrentActionMap(mapName);
-        //}
+        private void DeactivateDroneControls()
+        {
+            ReturnPlayerControl();
+            SwitchActionMap("Player");
+        }
+
+        private void ActivateForkLiftControls()
+        {
+            ReleasePlayerControl();
+            HidePlayer();
+            SwitchActionMap("ForkLift");
+        }
+
+        private void DeactivateForkLiftControls()
+        {
+            ReturnPlayerControl();
+            SwitchActionMap("Player");
+        }
 
         private void CalcutateMovement()
         {
