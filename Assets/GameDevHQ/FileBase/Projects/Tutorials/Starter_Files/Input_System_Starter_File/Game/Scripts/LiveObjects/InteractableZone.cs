@@ -15,7 +15,8 @@ namespace Game.Scripts.LiveObjects
         {
             Collectable,
             Action,
-            HoldAction
+            HoldAction,
+            TapHold
         }
 
         private enum KeyState
@@ -50,9 +51,10 @@ namespace Game.Scripts.LiveObjects
 
         private bool _inHoldState = false;
 
-        public PlayerInput playerInput;
+        [HideInInspector] public PlayerInput playerInput;
         InputAction _press;
         InputAction _pressHold;
+        InputAction _tapHold;
         
         private static int _currentZoneID = 0;
         public static int CurrentZoneID
@@ -94,6 +96,7 @@ namespace Game.Scripts.LiveObjects
 
                 _press = playerInput.actions["Press"];
                 _pressHold = playerInput.actions["PressHold"];
+                _tapHold = playerInput.actions["Break"];
 
                 switch (_zoneType)
                 {
@@ -130,15 +133,32 @@ namespace Game.Scripts.LiveObjects
                         _inZone = true;
                         if (_displayMessage != null)
                         {
-                            string message = $"Press the {_pressHold.GetBindingDisplayString()} key to {_displayMessage}.";
+                            string message = $"Hold the {_pressHold.GetBindingDisplayString()} key to {_displayMessage}.";
                             UIManager.Instance.DisplayInteractableZoneMessage(true, message);
                         }
                         else
                             UIManager.Instance.DisplayInteractableZoneMessage(true, $"Hold the __ key to perform action");
                         break;
+
+                    case ZoneType.TapHold:
+                        if(_actionPerformed == false)
+                        {
+                            _inZone = true;
+                            if (_displayMessage != null)
+                            {
+                                string message = $"{_tapHold.GetBindingDisplayString()} key to {_displayMessage}.";
+                                UIManager.Instance.DisplayInteractableZoneMessage(true, message);
+                            }
+                            else
+                            {
+                                UIManager.Instance.DisplayInteractableZoneMessage(true, $"Press the __ key to perform action");
+                            }
+            
+                        }
+                        break;
+
                 }
             }
-
         }
 
 
@@ -245,6 +265,7 @@ namespace Game.Scripts.LiveObjects
             if (zoneID == _zoneID)
             {
                 _currentZoneID++;
+                Debug.Log(_currentZoneID);
                 onZoneInteractionComplete?.Invoke(this);
             }
         }

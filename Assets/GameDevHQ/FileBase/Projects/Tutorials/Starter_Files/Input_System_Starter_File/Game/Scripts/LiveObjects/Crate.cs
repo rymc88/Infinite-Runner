@@ -17,51 +17,40 @@ namespace Game.Scripts.LiveObjects
 
         private List<Rigidbody> _brakeOff = new List<Rigidbody>();
 
-        PlayerInputActions _playerActions;
-
-        private bool _multiTapTriggered = false;
-        private bool _holdTriggered = false;
-        int _zoneID;
-
-        private void Awake()
-        {
-            _playerActions = new PlayerInputActions();
-        }
 
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
 
-            _playerActions.Enable();
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-
-            _playerActions.Crate.Enable();
-            _playerActions.Crate.PressHold.performed += PressHold_performed;
-
         }
 
-        private void PressHold_performed(InputAction.CallbackContext context)
+        public void Break_performed(InputAction.CallbackContext context)
         {
-            if(_isReadyToBreak && _brakeOff.Count > 0 && InteractableZone.CurrentZoneID == 6)
+            if (_isReadyToBreak && _brakeOff.Count > 0)
             {
-                var interactions = context.interaction;
-
-                if (interactions is MultiTapInteraction)
+                if (context.performed)
                 {
-                    BreakPart(2f, 2);
-                   
-                }
-                else if (interactions is HoldInteraction)
-                {
-                    BreakPart(5f, 5);
-                    
-                }
+                    var interactions = context.interaction;
 
-                StartCoroutine(PunchDelay());
+
+                    if (interactions is MultiTapInteraction)
+                    {
+                        BreakPart(2f, 2);
+                        Debug.Log(interactions);
+
+                    }
+                    else if (interactions is HoldInteraction)
+                    {
+                        BreakPart(5f, 5);
+                        Debug.Log(interactions);
+
+                    }
+
+                    StartCoroutine(PunchDelay());
+                }
+               
             }
-     
+
         }
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
@@ -72,38 +61,8 @@ namespace Game.Scripts.LiveObjects
                 _wholeCrate.SetActive(false);
                 _brokenCrate.SetActive(true);
                 _isReadyToBreak = true;
-                //_zoneID = zone.GetZoneID();
             }
 
-            //if (_isReadyToBreak && zone.GetZoneID() == 6) //Crate zone            
-            //{
-            //    if (_brakeOff.Count > 0)
-            //    {
-            //        if (_multiTapTriggered)
-            //        {
-            //            for (int i = 0; i < 2; i++)
-            //            {
-            //                BreakPart(2f);
-            //            }
-            //        }
-            //        else if (_holdTriggered)
-            //        {
-            //            for (int i = 0; i < 6; i++)
-            //            {
-            //                BreakPart(3.5f);
-            //            }
-            //        }
-                    
-            //        StartCoroutine(PunchDelay());
-            //    }
-            //    else if (_brakeOff.Count == 0)
-            //    {
-            //        _isReadyToBreak = false;
-            //        _crateCollider.enabled = false;
-            //        _interactableZone.CompleteTask(6);
-            //        Debug.Log("Completely Busted");
-            //    }
-            //}
         }
 
         private void Start()
@@ -142,7 +101,7 @@ namespace Game.Scripts.LiveObjects
                 yield return new WaitForEndOfFrame();
                 delayTimer += Time.deltaTime;
             }
-
+            
             if(_brakeOff.Count == 0)
             {
                 _isReadyToBreak = false;
@@ -159,11 +118,6 @@ namespace Game.Scripts.LiveObjects
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= InteractableZone_onZoneInteractionComplete;
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-            _playerActions.Crate.Disable();
-            _playerActions.Crate.PressHold.performed -= PressHold_performed;
         }
     }
 }

@@ -24,40 +24,17 @@ namespace Game.Scripts.LiveObjects
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
-        PlayerInputActions _playerActions;
-
-        private void Awake()
-        {
-            _playerActions = new PlayerInputActions();
-        }
-
         private void OnEnable()
         {
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
 
-            
-
-            _playerActions.Player.Enable();
-
-            _playerActions.Player.Press.performed += Press_performed;
-            _playerActions.Player.Exit.performed += Exit_performed;
         }
 
-        private void Exit_performed(InputAction.CallbackContext context)
-        {
-            if(_hacked == true)
-            {
-                _hacked = false;
-                onHackEnded?.Invoke();
-                ResetCameras();
-            }
 
-        }
-
-        private void Press_performed(InputAction.CallbackContext context)
+        public void OnPress(InputAction.CallbackContext context)
         {
-            if (_hacked == true)
+            if (_hacked && context.performed)
             {
                 var previous = _activeCamera;
                 _activeCamera++;
@@ -69,37 +46,18 @@ namespace Game.Scripts.LiveObjects
 
                 _cameras[_activeCamera].Priority = 11;
                 _cameras[previous].Priority = 9;
-
-               
             }
         }
 
-        //private void Update()
-        //{
-        //    if (_hacked == true)
-        //    {
-        //        if (Input.GetKeyDown(KeyCode.E))
-        //        {
-        //            var previous = _activeCamera;
-        //            _activeCamera++;
-
-
-        //            if (_activeCamera >= _cameras.Length)
-        //                _activeCamera = 0;
-
-
-        //            _cameras[_activeCamera].Priority = 11;
-        //            _cameras[previous].Priority = 9;
-        //        }
-
-        //        if (Input.GetKeyDown(KeyCode.Escape))
-        //        {
-        //            _hacked = false;
-        //            onHackEnded?.Invoke();
-        //            ResetCameras();
-        //        }
-        //    }
-        //}
+        public void OnExit()
+        {
+            if (_hacked)
+            {
+                _hacked = false;
+                onHackEnded?.Invoke();
+                ResetCameras();
+            }
+        }
 
         void ResetCameras()
         {
@@ -157,11 +115,6 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onHoldStarted -= InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded -= InteractableZone_onHoldEnded;
-
-            _playerActions.Player.Disable();
-            _playerActions.Drone.Disable();
-            _playerActions.ForkLift.Disable();
-            _playerActions.Crate.Disable();
         }
     }
 

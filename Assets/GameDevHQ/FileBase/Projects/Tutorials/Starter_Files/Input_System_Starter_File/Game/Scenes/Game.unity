@@ -661,7 +661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.842
+      value: 1.507
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3074,7 +3074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86c443bd499cba4195e4024731710ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoneType: 2
+  _zoneType: 3
   _zoneID: 6
   _requiredID: 5
   _displayMessage: Break the Crate
@@ -3082,6 +3082,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 21300000, guid: 88841726d7ebbfc46bf799ee1bfb7d3f, type: 3}
   _keyState: 0
   _marker: {fileID: 1808342870}
+  playerInput: {fileID: 0}
 --- !u!1001 &198573547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5831,7 +5832,19 @@ MonoBehaviour:
     m_ActionId: c35c4cbf-f2dd-4c6e-9025-64267fe7f646
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 816558616}
+        m_TargetAssemblyTypeName: Game.Scripts.LiveObjects.Laptop, Assembly-CSharp
+        m_MethodName: OnPress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 626bfcb0-7481-4edc-8207-f6e34c924695
     m_ActionName: 'Player/Press[/Keyboard/e]'
   - m_PersistentCalls:
@@ -5839,7 +5852,19 @@ MonoBehaviour:
     m_ActionId: 18c0a797-c386-467c-8ed6-86839da9b881
     m_ActionName: 'Player/PressHold[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 816558616}
+        m_TargetAssemblyTypeName: Game.Scripts.LiveObjects.Laptop, Assembly-CSharp
+        m_MethodName: OnExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4ac25883-e3b7-4362-8bcc-f07ef35e8177
     m_ActionName: 'Player/Exit[/Keyboard/escape]'
   - m_PersistentCalls:
@@ -5879,9 +5904,21 @@ MonoBehaviour:
     m_ActionId: 87a726a6-c43d-4df5-a387-1a833639ca78
     m_ActionName: 'ForkLift/Horizontal[/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8ebf2dd4-3a83-4f70-b526-af73ce59cae6
-    m_ActionName: 'Crate/PressHold[/Keyboard/space]'
+      m_Calls:
+      - m_Target: {fileID: 147778361}
+        m_TargetAssemblyTypeName: Game.Scripts.LiveObjects.Crate, Assembly-CSharp
+        m_MethodName: Break_performed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b2293bf2-2ec0-4228-8ffa-32c0c3d15121
+    m_ActionName: 'Player/Break[/Keyboard/x]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -8371,6 +8408,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 21300000, guid: 8e46bcb2f14d4d144b9e4a395b47efa2, type: 3}
   _keyState: 0
   _marker: {fileID: 605505802}
+  playerInput: {fileID: 0}
 --- !u!4 &482471386 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5779097134961922744, guid: 1d553f90302742946bbf45996165949c, type: 3}
@@ -10291,6 +10329,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 21300000, guid: 88841726d7ebbfc46bf799ee1bfb7d3f, type: 3}
   _keyState: 0
   _marker: {fileID: 1331263896}
+  playerInput: {fileID: 0}
 --- !u!1001 &565131287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11017,7 +11056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.245
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17305,6 +17344,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 0}
   _keyState: 0
   _marker: {fileID: 1578479318}
+  playerInput: {fileID: 0}
 --- !u!1 &972744894
 GameObject:
   m_ObjectHideFlags: 0
@@ -19171,7 +19211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1073608672}
   _speed: 5
-  _rotateMultiplier: 0.05
+  _rotateMultiplier: 0.1
   _propAnim: {fileID: 181193216}
   _droneCam: {fileID: 106664339}
   _interactableZone: {fileID: 1810029383}
@@ -23623,6 +23663,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 21300000, guid: 81dff3a1ca824714aae965897edd2351, type: 3}
   _keyState: 0
   _marker: {fileID: 1583429342}
+  playerInput: {fileID: 0}
 --- !u!1001 &1178759240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24932,6 +24973,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 21300000, guid: 88841726d7ebbfc46bf799ee1bfb7d3f, type: 3}
   _keyState: 0
   _marker: {fileID: 1840441541}
+  playerInput: {fileID: 0}
 --- !u!4 &1277958657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5779097134961922744, guid: 1d553f90302742946bbf45996165949c, type: 3}
@@ -25840,7 +25882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.y
@@ -30092,7 +30134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -33775,7 +33817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7175636788642312196, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_RootOrder
@@ -33783,7 +33825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.y
@@ -33791,11 +33833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: -0.063
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -33831,6 +33873,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -33878,6 +33924,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 0}
   _keyState: 0
   _marker: {fileID: 1041737524}
+  playerInput: {fileID: 0}
 --- !u!1001 &1810757429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34453,19 +34500,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.545
+      value: -0.779
       objectReference: {fileID: 0}
     - target: {fileID: 8458200631146686513, guid: d65c798ada92d4e81a896301d3a7aa8f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -37207,7 +37254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Size.z
-      value: 1.1899614
+      value: 1.7264662
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Center.x
@@ -37215,7 +37262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Center.z
-      value: 0.41781807
+      value: 0.1495657
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_IsTrigger
@@ -37306,6 +37353,7 @@ MonoBehaviour:
   _inventoryIcon: {fileID: 0}
   _keyState: 1
   _marker: {fileID: 55150249}
+  playerInput: {fileID: 0}
 --- !u!4 &2030128479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 83b308def8e254c558e3d7c4628b4fe2, type: 3}

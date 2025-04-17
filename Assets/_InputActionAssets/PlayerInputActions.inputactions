@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Break",
+                    "type": "Button",
+                    "id": "b2293bf2-2ec0-4228-8ffa-32c0c3d15121",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold(duration=1),MultiTap(tapCount=3)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -216,6 +225,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "PressHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f505fd0d-ccfe-4040-b166-c32d04f8455e",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Break",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6342f6dd-c86e-48f5-9af9-5ac445cbcd0a",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Break",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -777,45 +808,6 @@
                     "action": "Horizontal",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "Crate",
-            "id": "879c2e32-5afd-4e72-b535-38312f4e96d3",
-            "actions": [
-                {
-                    "name": "PressHold",
-                    "type": "Button",
-                    "id": "8ebf2dd4-3a83-4f70-b526-af73ce59cae6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold(duration=1),MultiTap(tapCount=3)",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "c5da8ad6-a4fa-4457-9cb9-ee8ff71d1d05",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "PressHold",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0bd24903-882d-45b4-b803-20473b0ef202",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PressHold",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }

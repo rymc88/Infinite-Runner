@@ -27,20 +27,10 @@ namespace Game.Scripts.Player
         private GameObject _model;
 
         [SerializeField] private PlayerInput _playerInput;
-        //private PlayerInputActions _playerActions;
-        
-
+       
         private void Awake()
         {
-            //_playerActions = new PlayerInputActions();
-
-            //if(_playerActions == null)
-            //{
-            //    Debug.Log("Player Input Actions is null", this.gameObject);
-            //}
-
-            //_playerInput.GetComponent<PlayerInput>();
-
+          
             if(_playerInput == null)
             {
                 Debug.Log("Player Input is null", this.gameObject);
@@ -57,12 +47,7 @@ namespace Game.Scripts.Player
             Drone.OnEnterFlightMode += ActivateDroneControls;
             Drone.onExitFlightmode += DeactivateDroneControls;
 
-            //_playerActions.Player.Enable();
-            //_playerActions.Drone.Enable();
-            //_playerActions.ForkLift.Enable();
-            //_playerActions.Crate.Enable();
-
-
+          
             SwitchActionMap("Player");
 
         }
@@ -137,6 +122,7 @@ namespace Game.Scripts.Player
         {
             ReturnPlayerControl();
             SwitchActionMap("Player");
+
         }
 
         private void CalcutateMovement()
