@@ -12,7 +12,7 @@ namespace Game.Scripts.LiveObjects
         [SerializeField]
         private Vector3 _liftLowerLimit, _liftUpperLimit;
         [SerializeField]
-        private float _speed = 5f, _liftSpeed = 1f;
+        private float _speed = 5f, _liftSpeed = 1f, _rotateSpeed = .1f;
         [SerializeField]
         private CinemachineCamera _forkliftCam;
         [SerializeField]
@@ -83,7 +83,7 @@ namespace Game.Scripts.LiveObjects
                 if (Mathf.Abs(v) > 0)
                 {
                     var tempRot = transform.rotation.eulerAngles;
-                    tempRot.y += h * _speed / 2;
+                    tempRot.y += h * _speed * _rotateSpeed;
                     transform.rotation = Quaternion.Euler(tempRot);
                 }
 

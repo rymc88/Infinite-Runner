@@ -5781,7 +5781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _rotateSpeed: 1
+  _rotateSpeed: 0.2
   _detonator: {fileID: 2496590969500232579}
   _followCam: {fileID: 1266060218}
   _model: {fileID: 852618543}
@@ -19211,7 +19211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1073608672}
   _speed: 5
-  _rotateMultiplier: 0.1
+  _rotateMultiplier: 0.05
   _propAnim: {fileID: 181193216}
   _droneCam: {fileID: 106664339}
   _interactableZone: {fileID: 1810029383}
